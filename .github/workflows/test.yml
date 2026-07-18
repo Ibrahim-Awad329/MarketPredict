@@ -1,0 +1,28 @@
+name: اختبار MarketPredict
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: نزل الكود
+        uses: actions/checkout@v4
+
+      - name: ثبت بايثون
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: ثبت المكتبات
+        working-directory: ./backend
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: شغل الاختبارات
+        working-directory: ./backend
+        run: pytest
